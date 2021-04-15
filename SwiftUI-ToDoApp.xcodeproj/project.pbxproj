@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6746F9692628262A00FF616F /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746F9682628262A00FF616F /* DismissButton.swift */; };
+		6746F96D262826BA00FF616F /* AddNewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746F96C262826BA00FF616F /* AddNewItemView.swift */; };
+		6746F97126282EF400FF616F /* ItemListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746F97026282EF400FF616F /* ItemListCell.swift */; };
 		67D5C1D326280AD200214D43 /* SwiftUI_ToDoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D5C1D226280AD200214D43 /* SwiftUI_ToDoAppApp.swift */; };
 		67D5C1D526280AD200214D43 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D5C1D426280AD200214D43 /* ContentView.swift */; };
 		67D5C1D726280AD300214D43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67D5C1D626280AD300214D43 /* Assets.xcassets */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6746F9682628262A00FF616F /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
+		6746F96C262826BA00FF616F /* AddNewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewItemView.swift; sourceTree = "<group>"; };
+		6746F97026282EF400FF616F /* ItemListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListCell.swift; sourceTree = "<group>"; };
 		67D5C1CF26280AD200214D43 /* SwiftUI-ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SwiftUI-ToDoApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67D5C1D226280AD200214D43 /* SwiftUI_ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI_ToDoAppApp.swift; sourceTree = "<group>"; };
 		67D5C1D426280AD200214D43 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -37,6 +43,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6746F96B2628266700FF616F /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				6746F9682628262A00FF616F /* DismissButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		6746F9732628321700FF616F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				6746F9742628324000FF616F /* AddNewItemView */,
+				67D5C1D426280AD200214D43 /* ContentView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		6746F9742628324000FF616F /* AddNewItemView */ = {
+			isa = PBXGroup;
+			children = (
+				6746F96C262826BA00FF616F /* AddNewItemView.swift */,
+			);
+			path = AddNewItemView;
+			sourceTree = "<group>";
+		};
+		6746F9752628325700FF616F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6746F96B2628266700FF616F /* Buttons */,
+				6746F9762628325D00FF616F /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6746F9762628325D00FF616F /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6746F97026282EF400FF616F /* ItemListCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6746F9772628326F00FF616F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				67D5C1DB26280AD300214D43 /* Persistence.swift */,
+				67D5C1DD26280AD300214D43 /* SwiftUI_ToDoApp.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		67D5C1C626280AD200214D43 = {
 			isa = PBXGroup;
 			children = (
@@ -56,12 +113,12 @@
 		67D5C1D126280AD200214D43 /* SwiftUI-ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				6746F9772628326F00FF616F /* CoreData */,
+				6746F9752628325700FF616F /* Views */,
+				6746F9732628321700FF616F /* Screens */,
 				67D5C1D226280AD200214D43 /* SwiftUI_ToDoAppApp.swift */,
-				67D5C1D426280AD200214D43 /* ContentView.swift */,
 				67D5C1D626280AD300214D43 /* Assets.xcassets */,
-				67D5C1DB26280AD300214D43 /* Persistence.swift */,
 				67D5C1E026280AD300214D43 /* Info.plist */,
-				67D5C1DD26280AD300214D43 /* SwiftUI_ToDoApp.xcdatamodeld */,
 				67D5C1D826280AD300214D43 /* Preview Content */,
 			);
 			path = "SwiftUI-ToDoApp";
@@ -146,8 +203,11 @@
 			files = (
 				67D5C1DC26280AD300214D43 /* Persistence.swift in Sources */,
 				67D5C1DF26280AD300214D43 /* SwiftUI_ToDoApp.xcdatamodeld in Sources */,
+				6746F96D262826BA00FF616F /* AddNewItemView.swift in Sources */,
 				67D5C1D526280AD200214D43 /* ContentView.swift in Sources */,
+				6746F9692628262A00FF616F /* DismissButton.swift in Sources */,
 				67D5C1D326280AD200214D43 /* SwiftUI_ToDoAppApp.swift in Sources */,
+				6746F97126282EF400FF616F /* ItemListCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
