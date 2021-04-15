@@ -12,24 +12,74 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.completed, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
 
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
+        VStack {
+            HStack {
+                Text("ToDo list")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.leading, 20)
+                Spacer()
+                Button(action: deleteAllItems) {
+                    Label("Remove all", systemImage: "trash")
+                }
+                .padding(.trailing, 35)
             }
-            .onDelete(perform: deleteItems)
+            List {
+                ForEach(items) { item in
+                    HStack {
+                        Text("\(item.title ?? "Your task")")
+                        Spacer()
+                        Image(systemName: item.completed ? "circle.fill" : "circle")
+                            .padding()
+                    }
+                    .onTapGesture {
+                        changeItemState(item: item)
+                    }
+                }
+                .onDelete(perform: deleteItems)
+            }
         }
         .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
+            ToolbarItem(placement: .bottomBar) {
+                Button(action: addItem) {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+    }
 
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+    private func changeItemState(item: Item) {
+        withAnimation {
+            item.completed.toggle()
+
+            do {
+                try viewContext.save()
+                print("saved item status")
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+
+    private func deleteAllItems() {
+        withAnimation {
+            items.forEach { viewContext.delete($0) }
+
+            do {
+                try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
     }
@@ -75,6 +125,6 @@ private let itemFormatter: DateFormatter = {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView().preferredColorScheme(.dark).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
