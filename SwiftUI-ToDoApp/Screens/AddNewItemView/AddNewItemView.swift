@@ -30,14 +30,7 @@ struct AddNewItemView: View {
                 }
             }
             .navigationTitle("Add a task")
-            .navigationBarItems(trailing: Button(action: {
-                isShowingSheet = false
-            }, label: {
-                Image(systemName: "xmark")
-                    .foregroundColor(Color(.label))
-                    .imageScale(.large)
-                    .frame(width: 50, height: 50)
-            }))
+            .navigationBarItems(trailing: DismissButton(isShowingSheet: $isShowingSheet))
         }
     }
 
