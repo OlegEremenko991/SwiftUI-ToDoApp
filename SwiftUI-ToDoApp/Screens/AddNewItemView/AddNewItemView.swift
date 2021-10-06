@@ -10,7 +10,6 @@ import SwiftUI
 struct AddNewItemView: View {
     @Environment(\.managedObjectContext)
     private var viewContext
-
     @Binding var isShowingSheet: Bool
     @State private var itemTitle = ""
 
@@ -23,9 +22,7 @@ struct AddNewItemView: View {
                         saveItem()
                     } label: {
                         Text("Save")
-                            .foregroundColor(itemTitle.isEmpty ?
-                                                Color(.systemGray) :
-                                                Color(.systemGreen))
+                            .foregroundColor(itemTitle.isEmpty ? Color(.systemGray) : Color(.systemGreen))
                     }
                 }
             }
@@ -33,8 +30,10 @@ struct AddNewItemView: View {
             .navigationBarItems(trailing: DismissButton(isShowingSheet: $isShowingSheet))
         }
     }
+}
 
-    private func saveItem() {
+private extension AddNewItemView {
+    func saveItem() {
         guard !itemTitle.isEmpty else { return }
         let newItem = Item(context: viewContext)
         newItem.title = itemTitle

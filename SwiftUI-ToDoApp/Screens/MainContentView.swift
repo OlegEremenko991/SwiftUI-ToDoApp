@@ -9,15 +9,13 @@ import SwiftUI
 import CoreData
 
 struct MainContentView: View {
-
     @Environment(\.managedObjectContext)
     private var viewContext
-
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.completed, ascending: true)],
-        animation: .default)
+        animation: .default
+    )
     private var items: FetchedResults<Item>
-
     @State private var isShowingAddItemView = false
 
     init() {
@@ -29,12 +27,13 @@ struct MainContentView: View {
             ZStack {
                 List {
                     ForEach(items) { item in
-                        ItemListCell(completed: item.completed,
-                                     title: item.title!,
-                                     timeStamp: itemFormatter.string(from: item.timestamp!))
-                            .onTapGesture {
-                                changeItemState(item: item)
-                            }
+                        ItemListCell(
+                            completed: item.completed,
+                            title: item.title ?? "",
+                            timeStamp: itemFormatter.string(from: item.timestamp!)
+                        ).onTapGesture {
+                            toggleItemState(item: item)
+                        }
                     }
                     .onDelete(perform: deleteItem)
                     .listRowBackground(Color(UIColor.systemBackground))
@@ -72,11 +71,19 @@ struct MainContentView: View {
             }
         }
     }
+}
 
-    private func changeItemState(item: Item) {
+private extension MainContentView {
+    var itemFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        return formatter
+    }
+
+    func toggleItemState(item: Item) {
         withAnimation {
             item.completed.toggle()
-
             do {
                 try viewContext.save()
                 print("saved item status, title: \(item.title!)")
@@ -87,20 +94,7 @@ struct MainContentView: View {
         }
     }
 
-    private func removeAllItems() {
-        withAnimation {
-            items.forEach { viewContext.delete($0) }
-
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItem(offsets: IndexSet) {
+    func deleteItem(offsets: IndexSet) {
         withAnimation {
             offsets.map { items[$0] }.forEach(viewContext.delete)
 
@@ -112,14 +106,19 @@ struct MainContentView: View {
             }
         }
     }
-}
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .medium
-    formatter.timeStyle = .medium
-    return formatter
-}()
+    func removeAllItems() {
+        withAnimation {
+            items.forEach { viewContext.delete($0) }
+            do {
+                try viewContext.save()
+            } catch {
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
